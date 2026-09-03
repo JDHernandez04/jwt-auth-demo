@@ -37,13 +37,24 @@ export function TasksPage() {
         {!loading && !error && Array.isArray(tasks) && (
           <List>
             {tasks.map((task) => (
-              <ListItem key={task.id} divider>
+              <ListItem 
+                key={task.id} 
+                divider
+                sx={{ 
+                  display: 'flex', 
+                  flexDirection: { xs: 'column', sm: 'row' }, 
+                  alignItems: { xs: 'flex-start', sm: 'center' },
+                  py: 1.5 // Un poco más de espacio vertical para respirar
+                }}
+              >
                 <ListItemText 
                   primary={task.title} 
                   secondary={`Vence: ${task.dueDate ? task.dueDate.split('T')[0] : 'Sin fecha'} — Proyecto ID: ${task.projectId}`} 
+                  sx={{ width: '100%', mb: { xs: 1.5, sm: 0 }, pr: 2 }} 
                 />
                 
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                {/* flexShrink: 0 evita que los botones se aplasten si el texto es muy largo */}
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexShrink: 0 }}>
                   <Chip 
                     label={task.status || 'TODO'} 
                     color={task.status === 'DONE' ? 'success' : 'warning'} 
@@ -54,10 +65,10 @@ export function TasksPage() {
                   <Chip label={task.priority || 'LOW'} size="small" />
 
                   <IconButton color="primary" size="small" onClick={() => setEditingTask(task)}>
-                    <EditIcon />
+                    <EditIcon fontSize="small" />
                   </IconButton>
                   <IconButton color="error" size="small" onClick={() => removeTask(task.id)}>
-                    <DeleteIcon />
+                    <DeleteIcon fontSize="small" />
                   </IconButton>
                 </Box>
               </ListItem>
