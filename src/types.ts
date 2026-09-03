@@ -20,3 +20,21 @@ export const API_URL =
   (import.meta.env.DEV ? '/api' : 'https://d3ujwk09smrk9z.cloudfront.net')
 
 export const TOKEN_KEY = 'jwt-auth-demo-token'
+
+export interface Task {
+  id: number
+  title: string
+  description?: string
+  priority: 'LOW' | 'MED' | 'HIGH'
+  status: 'TODO' | 'IN_PROGRESS' | 'DONE'
+  dueDate: string
+  projectId: number
+}
+
+export interface NewTask {
+  title: string
+  description?: string
+  priority: 'LOW' | 'MED' | 'HIGH'
+  dueDate: string
+  projectId: number
+}
