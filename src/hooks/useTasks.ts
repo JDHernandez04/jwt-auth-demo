@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
-import { getTasks } from '../services/taskService'
-import type { Task } from '../types'
+import { getTasks, markTaskAsDone, updateTask, deleteTask } from '../services/taskService'
+import type { Task, NewTask } from '../types'
 
 export function useTasks() {
   const [tasks, setTasks] = useState<Task[]>([])
@@ -9,6 +9,33 @@ export function useTasks() {
   const [reloadKey, setReloadKey] = useState(0)
 
   const refetch = useCallback(() => setReloadKey((k) => k + 1), [])
+
+  const completeTask = async (id: number) => {
+    try {
+      await markTaskAsDone(id)
+      refetch()
+    } catch (err) {
+      console.error('Error al completar:', err)
+    }
+  }
+
+  const editTask = async (id: number, body: Partial<NewTask>) => {
+    try {
+      await updateTask(id, body)
+      refetch()
+    } catch (err) {
+      console.error('Error al editar:', err)
+    }
+  }
+
+  const removeTask = async (id: number) => {
+    try {
+      await deleteTask(id)
+      refetch()
+    } catch (err) {
+      console.error('Error al eliminar:', err)
+    }
+  }
 
   useEffect(() => {
     let cancelled = false
@@ -20,5 +47,5 @@ export function useTasks() {
     return () => { cancelled = true }
   }, [reloadKey])
 
-  return { tasks, loading, error, refetch }
+  return { tasks, loading, error, refetch, completeTask, editTask, removeTask }
 }
