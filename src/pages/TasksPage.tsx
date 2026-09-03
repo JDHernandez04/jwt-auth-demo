@@ -15,7 +15,6 @@ export function TasksPage() {
   const { tasks, loading, error, refetch, completeTask, editTask, removeTask } = useTasks()
   const taskForm = useTaskForm({ onSuccess: refetch })
   
-  // Estado para controlar qué tarea se está editando en el modal
   const [editingTask, setEditingTask] = useState<Task | null>(null)
 
   return (
@@ -38,42 +37,35 @@ export function TasksPage() {
         {!loading && !error && Array.isArray(tasks) && (
           <List>
             {tasks.map((task) => (
-              <ListItem 
-                key={task.id} 
-                divider
-                // Agregamos los botones de editar y borrar al final de cada fila
-                secondaryAction={
-                  <Box>
-                    <IconButton edge="end" color="primary" onClick={() => setEditingTask(task)} sx={{ mr: 1 }}>
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton edge="end" color="error" onClick={() => removeTask(task.id)}>
-                      <DeleteIcon />
-                    </IconButton>
-                  </Box>
-                }
-              >
+              <ListItem key={task.id} divider>
                 <ListItemText 
                   primary={task.title} 
                   secondary={`Vence: ${task.dueDate ? task.dueDate.split('T')[0] : 'Sin fecha'} — Proyecto ID: ${task.projectId}`} 
-                  sx={{ pr: 2 }} // Un poco de padding para que el texto no choque con los botones
                 />
                 
-                <Chip 
-                  label={task.status || 'TODO'} 
-                  color={task.status === 'DONE' ? 'success' : 'warning'} 
-                  size="small" 
-                  onClick={task.status !== 'DONE' ? () => completeTask(task.id) : undefined}
-                  sx={{ cursor: task.status !== 'DONE' ? 'pointer' : 'default' }} 
-                />
-                <Chip label={task.priority || 'LOW'} size="small" sx={{ ml: 1, mr: 2 }} />
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Chip 
+                    label={task.status || 'TODO'} 
+                    color={task.status === 'DONE' ? 'success' : 'warning'} 
+                    size="small" 
+                    onClick={task.status !== 'DONE' ? () => completeTask(task.id) : undefined}
+                    sx={{ cursor: task.status !== 'DONE' ? 'pointer' : 'default' }} 
+                  />
+                  <Chip label={task.priority || 'LOW'} size="small" />
+
+                  <IconButton color="primary" size="small" onClick={() => setEditingTask(task)}>
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton color="error" size="small" onClick={() => removeTask(task.id)}>
+                    <DeleteIcon />
+                  </IconButton>
+                </Box>
               </ListItem>
             ))}
           </List>
         )}
       </Paper>
 
-      {/* Aquí renderizamos el modal oculto que solo se abre si editingTask tiene datos */}
       <TaskEditDialog 
         open={editingTask !== null} 
         task={editingTask} 
