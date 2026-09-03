@@ -34,7 +34,7 @@ export function LoginPage() {
   }
 
   return (
-    <Box maxWidth={480} mx="auto" mt={8}>
+    <Box sx={{ maxWidth: 480, mx: 'auto', mt: 8 }}>
       <Typography variant="h4" gutterBottom>
         JWT Auth Demo
       </Typography>

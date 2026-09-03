@@ -23,8 +23,8 @@ export function DashboardPage() {
   }
 
   return (
-    <Box maxWidth={640} mx="auto" mt={6}>
-      <Stack direction="row" justifyContent="space-between" alignItems="center" mb={3}>
+    <Box sx={{ maxWidth: 640, mx: 'auto', mt: 6 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3, width: '100%' }}>
         <Box>
           <Typography variant="h4" gutterBottom>
             Dashboard
@@ -36,7 +36,7 @@ export function DashboardPage() {
         <Button startIcon={<LogoutIcon />} onClick={handleLogout}>
           Cerrar sesión
         </Button>
-      </Stack>
+      </Box>
 
       <Paper sx={{ p: 3, mb: 3 }}>
         <ProjectForm {...projectForm} />

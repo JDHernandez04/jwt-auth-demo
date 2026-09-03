@@ -14,9 +14,9 @@ interface ProjectListProps {
 }
 
 export function ProjectList({ projects, loading, error }: ProjectListProps) {
-  if (loading) {
+if (loading) {
     return (
-      <Stack alignItems="center" py={4}>
+      <Stack sx={{ alignItems: 'center', py: 4 }}>
         <CircularProgress />
       </Stack>
     )
