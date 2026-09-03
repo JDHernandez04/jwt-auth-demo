@@ -19,16 +19,19 @@ export function TasksPage() {
       <Paper sx={{ p: 3 }}>
         {loading && <CircularProgress />}
         {error && <Typography color="error">{error}</Typography>}
-        {!loading && !error && (
+        
+        {/* Validamos explícitamente que 'tasks' sea un arreglo para evitar crasheos si la API devuelve algo distinto */}
+        {!loading && !error && Array.isArray(tasks) && (
           <List>
             {tasks.map((task) => (
               <ListItem key={task.id} divider>
                 <ListItemText 
                   primary={task.title} 
-                  secondary={`Vence: ${task.dueDate.split('T')[0]} — Proyecto ID: ${task.projectId}`} 
+                  /* Usamos un operador ternario para comprobar que dueDate exista antes de cortarlo */
+                  secondary={`Vence: ${task.dueDate ? task.dueDate.split('T')[0] : 'Sin fecha'} — Proyecto ID: ${task.projectId}`} 
                 />
-                <Chip label={task.status} color={task.status === 'DONE' ? 'success' : 'warning'} size="small" sx={{ ml: 1 }} />
-                <Chip label={task.priority} size="small" sx={{ ml: 1 }} />
+                <Chip label={task.status || 'TODO'} color={task.status === 'DONE' ? 'success' : 'warning'} size="small" sx={{ ml: 1 }} />
+                <Chip label={task.priority || 'LOW'} size="small" sx={{ ml: 1 }} />
               </ListItem>
             ))}
           </List>
