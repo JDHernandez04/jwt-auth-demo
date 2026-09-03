@@ -1,5 +1,5 @@
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import { Box, Button, CircularProgress, List, ListItem, ListItemText, Paper, Stack, Typography, Chip } from '@mui/material'
+import { Box, Button, CircularProgress, List, ListItem, ListItemText, Paper, Typography, Chip } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import { useTasks } from '../hooks/useTasks'
 
@@ -9,12 +9,12 @@ export function TasksPage() {
 
   return (
     <Box sx={{ maxWidth: 640, mx: 'auto', mt: 6 }}>
-      <Stack direction="row" alignItems="center" spacing={2} sx={{ mb: 3 }}>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 3 }}>
         <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/dashboard')}>
           Volver
         </Button>
         <Typography variant="h4">Gestión de Tareas</Typography>
-      </Stack>
+      </Box>
 
       <Paper sx={{ p: 3 }}>
         {loading && <CircularProgress />}
