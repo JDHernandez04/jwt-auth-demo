@@ -38,7 +38,7 @@ export function useTaskForm({ onSuccess }: UseTaskFormOptions = {}) {
         title: title.trim(),
         description: description.trim() || undefined,
         priority,
-        dueDate: new Date(dueDate).toISOString(),
+        dueDate: dueDate, 
         projectId: Number(projectId),
       })
       reset()

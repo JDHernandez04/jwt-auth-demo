@@ -39,7 +39,7 @@ export function TaskEditDialog({ open, task, onClose, onSave }: TaskEditDialogPr
       title: title.trim(),
       description: description.trim() || undefined,
       priority,
-      dueDate: new Date(dueDate).toISOString(),
+      dueDate: dueDate,
       projectId: Number(projectId)
     })
     
